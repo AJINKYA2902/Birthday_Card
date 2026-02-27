@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+background:#f6cbd3;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:'Montserrat',sans-serif;
+overflow:hidden;
+}
+
+/* Balloons */
+.balloon{
+position:absolute;
+bottom:-150px;
+width:60px;
+height:80px;
+border-radius:50%;
+opacity:0.8;
+animation:floatUp linear infinite;
+z-index:0;
+}
+.balloon:after{
+content:'';
+position:absolute;
+width:2px;
+height:50px;
+background:white;
+left:50%;
+top:80px;
+transform:translateX(-50%);
+}
+@keyframes floatUp{
+0%{transform:translateY(0);}
+100%{transform:translateY(-120vh);}
+}
+
+.container{
+position:relative;
+z-index:2;
+width:100%;
+max-width:800px;
+text-align:center;
+color:white;
+padding:20px;
+}
+
+h1{
+font-family:'Cormorant Garamond',serif;
+font-size:48px;
+margin-bottom:25px;
+}
+
+/* Gift */
+.gift-img{
+width:200px;
+cursor:pointer;
+transition:transform 0.3s;
+}
+.gift-img:hover{
+transform:scale(1.05);
+}
+
+/* Ajinkya PNG (after blast) */
+.cake-img{
+width:260px;
+margin:20px auto;
+display:block;
+}
+
+/* Blast */
+@keyframes blast{
+0%{transform:scale(1);}
+50%{transform:scale(1.4) rotate(15deg);}
+100%{transform:scale(0);opacity:0;}
+}
+
+/* Confetti */
+.confetti{
+position:absolute;
+width:8px;
+height:8px;
+animation:fall 2s linear forwards;
+}
+@keyframes fall{
+0%{transform:translateY(0) rotate(0);}
+100%{transform:translateY(500px) rotate(360deg);opacity:0;}
+}
+
+.message{
+font-size:22px;
+font-weight:700;
+margin-top:25px;
+line-height:1.5;
+color:black;
+}
+.hidden{display:none;}
+
+input{
+padding:10px;
+border-radius:20px;
+border:none;
+text-align:center;
+width:200px;
+}
+
+button{
+padding:10px 25px;
+border:none;
+border-radius:25px;
+background:#f06277;
+color:white;
+cursor:pointer;
+margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Balloons -->
+<div class="balloon" style="left:5%; background:#ff4d6d; animation-duration:12s;"></div>
+<div class="balloon" style="left:25%; background:#ff8fab; animation-duration:10s;"></div>
+<div class="balloon" style="left:50%; background:#f06277; animation-duration:14s;"></div>
+<div class="balloon" style="left:75%; background:#ec407a; animation-duration:11s;"></div>
+
+<div class="container">
+
+<div id="login">
+<h1>Enter The Secret Code 💌</h1>
+<input type="password" id="password" placeholder="Enter password">
+<br>
+<button onclick="checkPassword()">Unlock 💖</button>
+<p id="error"></p>
+</div>
+
+<div id="surprise" class="hidden">
+<h1>Tap the Gift 🎁</h1>
+
+<!-- Gift stays same -->
+<img src="f039496c26343cdee161c9a8529f1b03.png" 
+     class="gift-img" 
+     id="gift" 
+     onclick="blastBox()">
+
+<!-- THIS REPLACES CAKE -->
+<div id="afterBlast" style="display:none;">
+<h1 style="color:black;">Happy Birthday My Rare One 💎</h1>
+<img src="Ajinkya.png" class="cake-img">
+
+<p class="message">
+The world waits Four years for February 29,<br>
+but my heart celebrates you every single day...!!
+
+</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+function checkPassword(){
+var correctPassword="2902";
+var entered=document.getElementById("password").value.trim();
+
+if(entered===correctPassword){
+document.getElementById("login").style.display="none";
+document.getElementById("surprise").classList.remove("hidden");
+}else{
+document.getElementById("error").innerText="Wrong password 💔";
+}
+}
+
+function blastBox(){
+var gift=document.getElementById("gift");
+gift.style.animation="blast 0.8s forwards";
+createConfetti();
+
+setTimeout(()=>{
+gift.style.display="none";
+document.getElementById("afterBlast").style.display="block";
+},800);
+}
+
+function createConfetti(){
+for(let i=0;i<60;i++){
+let conf=document.createElement("div");
+conf.classList.add("confetti");
+conf.style.left=Math.random()*100+"vw";
+conf.style.background=["#ff4d6d","#ffd166","#06d6a0","#118ab2","#ef476f"][Math.floor(Math.random()*5)];
+document.body.appendChild(conf);
+setTimeout(()=>conf.remove(),2000);
+}
+}
+</script>
+
+</body>
+</html>
